@@ -1,3 +1,3 @@
-View project at:
+The OpenShift `nodejs` cartridge documentation can be found at:
 
-http://webdev2016-somisettyr.rhcloud.com/
+http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
