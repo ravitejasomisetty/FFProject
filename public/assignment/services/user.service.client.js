@@ -1,4 +1,4 @@
-app.factory("UserService", function ($http, $location) {
+angular.factory("UserService", function ($http, $location) {
     users = [
         {
             "_id": 123, "firstName": "Alice", "lastName": "Wonderland",
