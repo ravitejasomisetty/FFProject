@@ -14,7 +14,7 @@
                     templateUrl: "/views/users/login.view.html"
                 })
                 .when("/profile", {
-                    templateUrl: "/views/users/profile.view.html"
+                    templateUrl: "/assignment/views/users/profile.view.html"
                 })
                 .when("/admin", {
                     templateUrl: "/views/users/admin.view.html"
