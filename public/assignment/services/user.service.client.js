@@ -22,7 +22,7 @@ angular.factory("UserService", function ($http, $location) {
         }
     ];
 
-    var findUserByUsernameAndPassword = function (username, password, callback) {
+    var findUserByCredentials = function (username, password, callback) {
         for (var user in users) {
             if (user.username == username && user.password == password)
                 callback(user);
