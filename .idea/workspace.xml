@@ -2,15 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a4d6b7d-df9f-4499-bc64-9768a56c3297" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assignment/views/users/login.controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assignment/views/users/profile.controller.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/assignment/views/users/register.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/public/index.html" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/config.js" afterPath="$PROJECT_DIR$/public/assignment/config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/services/user.service.client.js" afterPath="$PROJECT_DIR$/public/assignment/services/user.service.client.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/views/users/login.view.html" afterPath="$PROJECT_DIR$/public/assignment/views/users/login.view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/views/users/profile.view.html" afterPath="$PROJECT_DIR$/public/assignment/views/users/profile.view.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/views/main/main.controller.js" afterPath="$PROJECT_DIR$/public/assignment/views/main/main.controller.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/assignment/views/sidebar/sidebar.view.html" afterPath="$PROJECT_DIR$/public/assignment/views/sidebar/sidebar.view.html" />
     </list>
     <ignored path="FFProject.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,16 +47,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.40522063">
-              <caret line="33" column="95" selection-start-line="33" selection-start-column="95" selection-end-line="33" selection-end-column="95" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="header.view.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/assignment/views/header/header.view.html">
           <provider selected="true" editor-type-id="text-editor">
@@ -75,7 +61,17 @@
         <entry file="file://$PROJECT_DIR$/public/assignment/config.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+              <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8154133">
+              <caret line="59" column="82" selection-start-line="59" selection-start-column="82" selection-end-line="59" selection-end-column="82" />
               <folding />
             </state>
           </provider>
@@ -153,15 +149,15 @@
       <list>
         <option value="$PROJECT_DIR$/common/default.html" />
         <option value="$PROJECT_DIR$/public/assignment/app.js" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/public/assignment/services/user.service.client.js" />
         <option value="$PROJECT_DIR$/public/assignment/views/users/register.controller.js" />
         <option value="$PROJECT_DIR$/public/assignment/views/users/login.controller.js" />
         <option value="$PROJECT_DIR$/public/assignment/views/users/login.view.html" />
-        <option value="$PROJECT_DIR$/public/assignment/config.js" />
         <option value="$PROJECT_DIR$/public/assignment/views/users/profile.view.html" />
         <option value="$PROJECT_DIR$/public/assignment/views/users/profile.controller.js" />
         <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/public/assignment/config.js" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -502,14 +498,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/assignment/views/users/register.view.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.5714285">
-          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/assignment/views/main/main.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -550,14 +538,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/assignment/services/user.service.client.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/assignment/views/header/header.view.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-25.142857">
@@ -582,18 +562,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/assignment/config.js">
+    <entry file="file://$PROJECT_DIR$/public/assignment/views/users/register.view.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="26" column="11" selection-start-line="26" selection-start-column="11" selection-end-line="26" selection-end-column="11" />
+        <state vertical-scroll-proportion="-1.5714285">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
+    <entry file="file://$PROJECT_DIR$/public/assignment/services/user.service.client.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40522063">
-          <caret line="33" column="95" selection-start-line="33" selection-start-column="95" selection-end-line="33" selection-end-column="95" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/assignment/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8154133">
+          <caret line="59" column="82" selection-start-line="59" selection-start-column="82" selection-end-line="59" selection-end-column="82" />
           <folding />
         </state>
       </provider>
