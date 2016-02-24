@@ -24,12 +24,29 @@
             callback([]);
         }
 
-        function deleteFormById(formId, callback){
+        function deleteFormById(formId, callback) {
             for (i = 0; i < forms.length; i++) {
                 if (forms[i]._id == formId)
-                    forms.remove(forms[i]);
+                    forms.splice(i, 1);
             }
-            callback([]);
+            callback(forms);
+        }
+
+        function updateFormById(formId, newForm, callback) {
+            for (i = 0; i < forms.length; i++) {
+                if (forms[i]._id == formId) {
+                    forms[i].title = newForm.name;
+                    forms[i].userId = newForm.userId;
+                }
+            }
+            callback(newForm);
+        }
+
+        return{
+            createFormForUser:createFormForUser,
+            findAllFormsForUser:findAllFormsForUser,
+            deleteFormById:deleteFormById,
+            updateFormById:updateFormById
         }
     }
 })();
