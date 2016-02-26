@@ -55,12 +55,19 @@
         };
 
         var updateUser = function (userId, user, callback) {
-            for (var u in users) {
+
+            $.each(users,function(i,usr){
+                if (userId == usr._id) {
+                    callback(usr);
+                }
+            })
+
+            /*for (var u in users) {
                 if (userId == u._id) {
                     u = user;
                     callback(u);
                 }
-            }
+            }*/
         };
         return {
             findUserByCredentials: findUserByCredentials,

@@ -18,7 +18,8 @@ app.config(function($routeProvider){
                     controller:"ProfileController"
                 })
                 .when("/admin", {
-                    templateUrl: "assignment/views/users/admin.view.html"
+                    templateUrl: "assignment/views/admin/admin.view.html"
+
                 })
                 .when("/forms", {
                     templateUrl: "assignment/views/forms/forms.view.html",

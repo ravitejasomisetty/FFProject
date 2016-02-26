@@ -11,9 +11,16 @@
 
         $scope.update=function(){
             UserService.updateUser($rootScope.user._id,$rootScope.user,function(res){
-                console.log("updated url");
+
+                $scope.$apply(function(){
+                res = $rootScope.user;
+                });
+                //console.log("updated url");
             });
         };
     }
 })();
+
+
+
 
