@@ -58,6 +58,7 @@
 
             $.each(users,function(i,usr){
                 if (userId == usr._id) {
+                    usr= user;
                     callback(usr);
                 }
             })
