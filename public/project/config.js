@@ -23,7 +23,11 @@ app.config(function($routeProvider){
                     templateUrl: "client/views/forms/search.view.html",
                     controller:"SearchController"
                 })
+                .when("/details", {
+                    templateUrl: "client/views/forms/details.view.html",
+                    controller:"DetailsController"
+                })
                 .otherwise({
-                    redirectTo: "/users"
+                    redirectTo: "/search"
                 });
         });
