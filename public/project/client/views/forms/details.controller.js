@@ -32,8 +32,12 @@
                 "PossibleModels": "Chevy Tahoe, Toyota Highlander, or similar"
             }
         }
-        $scope.success = function(){
-          window.open("client/views/forms/successmessage.html");
+        $scope.success = function () {
+            window.open("client/views/forms/successmessage.html");
+            if ($rootScope.user) {
+                $rootScope.user.instance = $scope.instance;
+                console.log($rootScope.user.instance);
+            }
         };
         $scope.HWRefNumber = $routeParams.HWRefNumber;
         $scope.instance = $rootScope.instance;
