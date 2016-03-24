@@ -6,13 +6,13 @@
     function RegisterController($scope, UserService, $location, $rootScope) {
 
         $scope.register = function () {
-            $scope.user.firstname = "";
-            $scope.user.lastname = "";
+            $scope.user.firstName = "";
+            $scope.user.lastName = "";
             $scope.user.roles = "";
             if ($scope.user.password == $scope.user.verifypassword) {
                 UserService.createUser($scope.user)
                     .then(function (res) {
-                        $rootScope.user = res;
+                        $rootScope.user = res.data;
                         alert("Welcome to FormBuilder App");
                     });
                 $location.url("/profile");

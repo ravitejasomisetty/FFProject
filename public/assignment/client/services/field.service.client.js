@@ -1,16 +1,13 @@
-/**
- * Created by ravit on 3/17/2016.
- */
 (function () {
     'use strict';
     angular
         .module("FormBuilderApp")
         .factory("FieldService", FieldService);
-
     function FieldService($http) {
+
         function createFieldForForm(formId, field) {
-            var form = $http.post("/api/assignment/form/" + formId + "/field" + field);
-            return form;
+            var fields = $http.post("/api/assignment/form/" + formId + "/field", field);
+            return fields;
         }
 
         function getFieldsForForm(formId) {
@@ -18,25 +15,33 @@
             return fields;
         }
 
-        function getFieldForForm(formId, fieldId) {
-            return $http.get("/api/assignment/form/" + formId + "/field" + fieldId);
-        }
-
-        function deleteFieldFromForm(formId, fieldId) {
-            var updatedForm = $http.delete("/api/assignment/form/" + formId + "/field" + fieldId);
-            return updatedForm;
+        function getFieldForForm(formId, fieldId){
+            var field=$http.get(" /api/assignment/form/"+formId+"/field/"+fieldId);
+            return field;
         }
 
         function updateField(formId, fieldId, field) {
-            $http.put("/api/assignment/form/" + formId + "/field/" + fieldId);
+            var updatedFields=$http.put("/api/assignment/form/" + formId + "/field/" + fieldId, field);
+            return updatedFields;
+        }
+
+        function deleteFieldFromForm(formId, fieldId) {
+            var fields = $http.delete("/api/assignment/form/" + formId + "/field/" + fieldId);
+            return fields;
+        }
+
+        function updateFieldsOrder(formId, fields) {
+            var fields = $http.put("/api/assignment/form/" + formId + "/fields", fields);
+            return fields;
         }
 
         return {
             createFieldForForm: createFieldForForm,
             getFieldsForForm: getFieldsForForm,
-            getFieldForForm: getFieldForForm,
+            getFieldForForm:getFieldForForm,
+            updateField: updateField,
             deleteFieldFromForm: deleteFieldFromForm,
-            updateField: updateField
+            updateFieldsOrder: updateFieldsOrder
         }
     }
 })();
