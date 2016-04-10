@@ -1,22 +1,92 @@
 /**
  * Created by ravit on 3/23/2016.
  */
-module.exports = function (uuid) {
+module.exports = function (mongoose,db,uuid) {
+    var q = require("q");
+    var RentSchema = require('./rent.schema.server.js')(mongoose);
+    var RentModel = mongoose.model("RentModel", RentSchema);
     var rents = [{
         "platenumber": "4HS821",
-        "rentdate": "3/23/2016",
-        "returndate": "3/25/2016",
+        "rentdate": "3/19/2016",
+        "returndate": "3/21/2016",
         "totalrentday": "30",
         "dailyrentfee": "10",
+        "pickuptime": "09:00",
+        "returntime": "18:30",
+        "carimage": "https://ak-secure.hotwirestatic.com/x/static/images/car/cartypes/181x82/US/compact.png",
+        "subtotal": "101.34",
+        "taxesandfees": "20",
+        "totalprice": "121.34",
+        "cartypecode": "CCAR",
+        "cartypename": "Compact Car",
+        "locationdescription": "Boston Airport",
+        "mileagedescription": "21",
+        "pickupairport": "LOGAN",
         "fuelprovidedby": "RENTER",
         "fuelcharge": "10.10",
         "downpayment": "20",
         "totalpaid": "30",
         "refund": "10",
+        "status": "SUCCESS",
         "rentid": "123",
         "renterid": "123",
         "employeeid": "111"
-    }];
+    },
+        {
+            "platenumber": "F62BGM",
+            "rentdate": "3/31/2016",
+            "returndate": "4/6/2016",
+            "totalrentday": "30",
+            "dailyrentfee": "19",
+            "pickuptime": "09:00",
+            "returntime": "18:30",
+            "carimage": "https://ak-secure.hotwirestatic.com/x/static/images/car/cartypes/181x82/US/compact.png",
+            "subtotal": "101.34",
+            "taxesandfees": "20",
+            "totalprice": "121.34",
+            "cartypecode": "CCAR",
+            "cartypename": "Compact Car",
+            "locationdescription": "Boston Airport",
+            "mileagedescription": "21",
+            "pickupairport": "LOGAN",
+            "fuelprovidedby": "RENTER",
+            "fuelcharge": "10.10",
+            "downpayment": "20",
+            "totalpaid": "30",
+            "refund": "10",
+            "status": "RESERVED",
+            "rentid": "345",
+            "renterid": "123",
+            "employeeid": "111"
+        },
+        {
+            "platenumber": "AHEIWP",
+            "rentdate": "3/29/2016",
+            "returndate": "4/2/2016",
+            "totalrentday": "30",
+            "dailyrentfee": "10",
+            "pickuptime": "09:00",
+            "returntime": "18:30",
+            "carimage": "https://ak-secure.hotwirestatic.com/x/static/images/car/cartypes/181x82/US/compact.png",
+            "subtotal": "101.34",
+            "taxesandfees": "20",
+            "totalprice": "121.34",
+            "cartypecode": "CCAR",
+            "cartypename": "Compact Car",
+            "locationdescription": "SFO Airport",
+            "mileagedescription": "21",
+            "pickupairport": "LOGAN",
+            "fuelprovidedby": "RENTER",
+            "fuelcharge": "10.10",
+            "downpayment": "20",
+            "totalpaid": "30",
+            "refund": "10",
+            "status": "CANCEL",
+            "rentid": "567",
+            "renterid": "123",
+            "employeeid": "111"
+        }];
+    var recentRentJSON;
     return {
         viewRent: viewRent,
         rentVehicle: rentVehicle,
@@ -25,7 +95,23 @@ module.exports = function (uuid) {
         findAllRents: findAllRents,
         findAllRentsByTeller: findAllRentsByTeller,
         findAllRentsByRenter: findAllRentsByRenter,
-        approveRent: approveRent
+        approveRent: approveRent,
+        recentRent: recentRent,
+        cancelRent: cancelRent
+    }
+
+    function cancelRent(rentid) {
+        var rent = viewRent(rentid);
+        if (rent) {
+            rent.status = "CANCEL";
+            updateRent(rent);
+            return true;
+        }
+        return false;
+    }
+
+    function recentRent() {
+        return recentRentJSON;
     }
 
     function approveRent(rentid, employeeid) {
@@ -57,41 +143,93 @@ module.exports = function (uuid) {
     }
 
     function findAllRents() {
-        return rents;
+        var deferred = q.defer();
+        RentModel.find(function (err, rents) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(rents);
+            }
+        });
+        return deferred.promise;
     }
 
     function viewRent(rentid) {
-        for (var i = 0; i < rents.length; i++) {
-            if (rents[i].rentid == rentid) {
-                return rents[i];
+        var deferred = q.defer();
+        RentModel.findById(rentid, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
             }
-        }
-        return null;
+        });
+        return deferred.promise;
     }
 
     function rentVehicle(rent) {
-        var rentid = uuid.v1();
-        rent.rentid = rentid;
-        rents.push(rent);
-        return rents;
+        var deferred = q.defer();
+
+        // insert new user with mongoose renter model's create()
+        RentModel.create(rent, function (err, doc) {
+
+            if (err) {
+                // reject promise if error
+                deferred.reject(err);
+            } else {
+                // resolve promise
+                deferred.resolve(doc);
+            }
+
+        });
+
+        // return a promise
+        return deferred.promise;
     }
 
     function updateRent(rent) {
-        for (var i = 0; i < rents.length; i++) {
-            if (rents[i].rentid == rent.rentid) {
-                rents[i] = rent;
-                return rents;
-            }
-        }
-        return null;
+        var deferred = q.defer();
+
+        // find the reservation
+        RentModel.findById(rent.rentid, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+                doc.platenumber=rent.platenumber;
+                doc.rentdate=rent.rentdate;
+                doc.returndate=rent.returndate;
+                doc.totalrentday=rent.totalrentday;
+                doc.dailyrentfee=rent.dailyrentfee;
+                doc.fuelprovidedby=rent.fuelprovidedby;
+                doc.fuelcharge=rent.fuelcharge;
+                doc.downpayment=rent.downpayment;
+                doc.totalpaid=rent.totalpaid;
+                doc.refund=rent.refund;
+                doc.customerid=rent.customerid;
+                doc.employeeid=rent.employeeid;
+                doc.save(function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+
+                        // resolve promise with renter
+                        deferred.resolve(doc);
+                    }
+                });
+            }})
     }
 
     function deleteRent(rentid) {
-        for (var i = 0; i < rents.length; i++) {
-            if (rents[i].rentid == rentid) {
-                rents.splice(i, 1);
+        var deferred = q.defer();
+        RentModel.remove({_id:rentid}, function(err, status) {
+            if(err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(status);
             }
-        }
-        return rents;
+        });
+        return deferred.promise;
     }
 };

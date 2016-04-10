@@ -12,11 +12,16 @@
             newTeller:newTeller,
             updateTeller:updateTeller,
             deleteTeller:deleteTeller,
-            findAllTellers:findAllTellers
+            findAllTellers:findAllTellers,
+            findTellerByCredentials:findTellerByCredentials
         }
+        function findTellerByCredentials(username, password, teller) {
+            var teller = $http.get("/api/grabacar/teller?username=" + username + "&password=" + password);
+            return teller;
+        };
+
         function findAllTellers(){
             var tellers=$http.get("/api/grabacar/teller");
-            console.log(tellers);
             return tellers;
         };
 

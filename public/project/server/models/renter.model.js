@@ -3,39 +3,42 @@
  */
 
 
-module.exports = function (uuid) {
+module.exports = function (mongoose,db,uuid) {
+    var q = require("q");
+    var RenterSchema = require('./renter.schema.server.js')(mongoose);
+    var RenterModel = mongoose.model("RenterModel", RenterSchema);
     var renters = [
         {
-            "_id": 123, "firstName": "Alice","lastName": "Wonderland", "nationality": "Indian",
-            "city": "Boston", "mobilenumber": "999999999", "birthdate": new Date("6/8/1992"),
-            "rentername": "alice", "password": "alice", "email": "alicewonderland@gmail.com","roles":"admin",
+            "_id": 123, "firstName": "Alice", "lastName": "Wonderland", "nationality": "Indian",
+            "city": "Boston", "mobilenumber": "999999999", "birthdate": "6/8/1992",
+            "rentername": "alice", "password": "alice", "email": "alicewonderland@gmail.com", "roles": "admin",
             "licenseNumber": "ADPHHSPE12",
             "licenseCountry": "United States",
-            "status":"Waiting for approval"
+            "status": "Waiting for approval"
         },
         {
-            "_id": 234, "firstName": "Bob","lastName":"Hope", "nationality": "American",
-            "city": "Phoenix", "mobilenumber": "999999999", "birthdate": new Date("4/25/1992"),
+            "_id": 234, "firstName": "Bob", "lastName": "Hope", "nationality": "American",
+            "city": "Phoenix", "mobilenumber": "999999999", "birthdate": "4/25/1992",
             "rentername": "bob", "password": "bob", "email": "bobhope@gmail.com",
             "licenseNumber": "ADPHHSPE12",
             "licenseCountry": "United States",
-            "status":"Waiting for approval"
+            "status": "Waiting for approval"
         },
         {
-            "_id": 345, "firstName": "Charlie","lastName":"Brown", "nationality": "African",
-            "city": "New Jersey", "mobilenumber": "999999999", "birthdate": new Date("7/6/1992"),
-            "rentername": "charlie", "password": "charlie", "email": "charliebrown@gmail.com","roles":"admin",
+            "_id": 345, "firstName": "Charlie", "lastName": "Brown", "nationality": "African",
+            "city": "New Jersey", "mobilenumber": "999999999", "birthdate": "7/6/1992",
+            "rentername": "charlie", "password": "charlie", "email": "charliebrown@gmail.com", "roles": "admin",
             "licenseNumber": "ADPHHSPE12",
             "licenseCountry": "United States",
-            "status":"Approved"
+            "status": "Approved"
         },
         {
-            "_id": 456, "firstName": "Dan","lastName":"Craig", "nationality": "African",
-            "city": "San Diego", "mobilenumber": "999999999", "birthdate": new Date("2/22/1992"),
+            "_id": 456, "firstName": "Dan", "lastName": "Craig", "nationality": "African",
+            "city": "San Diego", "mobilenumber": "999999999", "birthdate": "2/22/1992",
             "rentername": "dan", "password": "dan", "email": "dancraig@gmail.com",
             "licenseNumber": "ADPHHSPE12",
             "licenseCountry": "United States",
-            "status":"Declined"
+            "status": "Declined"
         }
     ];
     var api = {
@@ -46,17 +49,15 @@ module.exports = function (uuid) {
         Delete: Delete,
         findRenterByRentername: findRenterByRentername,
         findRenterByCredentials: findRenterByCredentials,
-        isYoungDriver:isYoungDriver
+        isYoungDriver: isYoungDriver
     };
     return api;
 
-    function isYoungDriver(renterId){
-        for(var i=0;i<renters.length;i++)
-        {
-            if(renterId==renters[i]._id){
-                var age=_calculateAge(renters[i].birthdate);
-                if(15<=age && age<=18)
-                {
+    function isYoungDriver(renterId) {
+        for (var i = 0; i < renters.length; i++) {
+            if (renterId == renters[i]._id) {
+                var age = _calculateAge(renters[i].birthdate);
+                if (15 <= age && age <= 18) {
                     return true;
                 }
             }
@@ -71,63 +72,120 @@ module.exports = function (uuid) {
     }
 
     function Create(renter) {
-        renter._id = uuid.v1();
-        if (renters) {
-            renters.push(renter);
-        }
-        else renters = [renter];
-        return renters;
+        var deferred = q.defer();
+
+        // insert new user with mongoose renter model's create()
+        RenterModel.create(renter, function (err, doc) {
+
+            if (err) {
+                // reject promise if error
+                deferred.reject(err);
+            } else {
+                // resolve promise
+                deferred.resolve(doc);
+            }
+
+        });
+
+        // return a promise
+        return deferred.promise;
     }
 
     function FindAll() {
-        return renters;
+        var deferred = q.defer();
+        RenterModel.find(function (err, renters) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(renters);
+            }
+        });
+        return deferred.promise;
     }
 
     function FindById(id) {
-        for (var i = 0; i < renters.length; i++) {
-            if (renters[i]._id == id)
-                return renters[i];
-        }
-        return null;
+        var deferred = q.defer();
+        RenterModel.findById(id, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
     }
 
     function Update(id, renter) {
-        for (var i = 0; i < renters.length; i++) {
-            if (renters[i]._id == id) {
-                renters[i].firstName = renter.firstName;
-                renters[i].lastName = renter.lastName;
-                renters[i].rentername = renter.rentername;
-                renters[i].password = renter.password;
-                renters[i].email = renter.email;
-                renters[i].roles=renter.roles;
+        var deferred = q.defer();
+
+        // find the user
+        RenterModel.findById(id, function (err, doc) {
+
+            // reject promise if error
+            if (err) {
+                deferred.reject(err);
+            } else {
+                doc.firstName = renter.firstName;
+                doc.lastName = renter.lastName;
+                doc.rentername = renter.rentername;
+                doc.city = renter.city;
+                doc.nationality = renter.nationality;
+                doc.mobilenumber = renter.mobilenumber;
+                doc.birthdate = renter.birthdate;
+                doc.licenseNumber = renter.licenseNumber;
+                doc.licenseCountry = renter.licenseCountry;
+                doc.password = renter.password;
+                doc.status = renter.status;
+                doc.email = renter.email;
+                doc.roles = renter.roles;
+                doc.save(function (err, doc) {
+
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+
+                        // resolve promise with renter
+                        deferred.resolve(doc);
+                    }
+                });
             }
-        }
-        return renters;
+        });
+        return deferred.promise;
     }
 
     function Delete(id) {
-        var rentersCopy = renters;
-        for (var i = 0; i < rentersCopy.length; i++) {
-            if (rentersCopy[i]._id == id) {
-                renters.splice(i, 1);
+        var deferred = q.defer();
+        RenterModel.remove({_id:id}, function(err, status) {
+            if(err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(status);
             }
-        }
-        return renters;
+        });
+        return deferred.promise;
     }
 
     function findRenterByRentername(rentername) {
-        for (var i = 0; i < renters.length; i++) {
-            if (renters[i].rentername == rentername)
-                return renters[i];
-        }
-        return null;
+        var deferred = q.defer();
+        RenterModel.findOne({rentername: rentername}, function (err, renter) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(renter);
+            }
+        });
+        return deferred.promise;
     }
 
     function findRenterByCredentials(credentials) {
-        for (var i = 0; i < renters.length; i++) {
-            if (renters[i].rentername == credentials.rentername && renters[i].password == credentials.password)
-                return renters[i];
-        }
-        return null;
+        var deferred = q.defer();
+        RenterModel.findOne({rentername: credentials.rentername, password: credentials.password}, function (err, renter) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(renter);
+            }
+        });
+        return deferred.promise;
     }
 };

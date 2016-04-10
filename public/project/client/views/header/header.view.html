@@ -5,7 +5,7 @@
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container-fluid" ng-controller="HeaderController">
+    <div class="container-fluid" ng-controller="HeaderController as model">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
@@ -18,14 +18,27 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-class="{'active': $location.url()=='/register'}">
+                <li ng-class="{'active': model.$location.url()=='/register'}">
                     <a href="#/register" ng-hide="user">Register</a></li>
-                <li ng-class="{'active': $location.url()=='/login'}">
+                <li ng-class="{'active': model.$location.url()=='/login'}">
                     <a href="#/login" ng-hide="user"> Login </a></li>
-                <li ng-class="{'active': $location.url()=='/profile'}">
+                <li ng-class="{'active': model.$location.url()=='/profile'}">
                     <a href="#/profile" ng-show="user"> {{user.rentername}} </a></li>
                 <li>
-                    <a href="#/login" ng-click="logout()" ng-show="user"> Logout </a></li>
+                    <a href="#/login" ng-click="model.logout()" ng-show="user"> Logout </a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right visible-xs">
+                <li ng-class="{'active': $location.url()=='/search'}">
+                    <a href="#/search"> Find cars</a></li>
+                <li ng-class="{'active': $location.url()=='/admin'}">
+                    <a href="#/admin" ng-show="user.roles.indexOf('admin') >= 0"> Approve New Renters </a></li>
+                <li ng-class="{'active' : $location.url()=='/renter'}"><a href="#/renter"> Renter </a></li>
+                <li ng-class="{'active': $location.url()=='/teller'}">
+                    <a href="#/teller">Teller</a></li>
+                <li ng-class="{'active': $location.url()=='/reservation'}">
+                    <a href="#/reservation"> Reservation </a></li>
+                <li ng-class="{'active': $location.url()=='/vehicle'}">
+                    <a href="#/vehicle"> Vehicle </a></li>
             </ul>
         </div>
     </div>
