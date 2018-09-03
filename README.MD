@@ -1,3 +1,1 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
-
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+Learning MEAN stack development under public/assignment folder and applying them to GrabACar /public/project folder. It had been hosted with OpenShift at http://webdev2016-somisettyr.rhcloud.com/ (Link is broken until I update the project to latest version of OpenShift)
